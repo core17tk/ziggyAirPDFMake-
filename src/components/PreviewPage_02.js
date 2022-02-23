@@ -1,16 +1,17 @@
 import React, { useContext } from 'react'
 import TaskContext from '../context/TaskContext'
+import GenerateGraph_03 from './GenerateGraph_03';
 
 var pdfMake = require('pdfmake/build/pdfmake.js');
 var pdfFonts = require('pdfmake/build/vfs_fonts.js');
 
 const PreviewPage_02 = () => {
-  const {userValue} = useContext(TaskContext)
+  const {userValue, imageURL} = useContext(TaskContext)
   const {location, compliedBy, monitoringPeriod, compliedOn} = userValue
 
   const downloadPDF = (e) => {
     e.preventDefault()
-
+    console.log(imageURL)
     var docDefinition = {
         content: [
             {
@@ -71,6 +72,17 @@ const PreviewPage_02 = () => {
             },
             {
               text: 'Average Air Quality Rating', alignment: 'center', fontSize: 22, margin: [10,30]
+            },
+
+            {
+              image: imageURL, height: 150, width: 400
+            },
+            {
+              ol: [
+                document.getElementById('good').textContent,
+                document.getElementById('medium').textContent,
+                document.getElementById('poor').textContent
+              ]
             }
             
         ],
@@ -118,6 +130,11 @@ const PreviewPage_02 = () => {
         <h2 id='monitoringDataTag'> {monitoringPeriod}</h2>
         <h2 id='compliedDataOnTag'> {compliedOn}</h2>
 
+        <GenerateGraph_03/>
+
+        <h1 id='good'> Good </h1>
+        <h1 id='medium'> Medium </h1>
+        <h1 id='poor'> Poor </h1>
       </div>
 
         <div className="flex justify-center">

@@ -1,16 +1,18 @@
-import React, {useState} from 'react'
-import {Chart as ChartJS, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import {Bar} from 'react-chartjs-2'
+import React, { useContext } from 'react'
+import { Chart as ChartJS ,BarElement, CategoryScale, LinearScale, ArcElement } from 'chart.js'
+import { Bar, Pie } from 'react-chartjs-2'
+import TaskContext from '../context/TaskContext'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,    
-  BarElement
-)
-
+  BarElement,
+  ArcElement
+  )
+  
 const GenerateGraph_03 = () => {
-  const [imageURL, setImageURL] = useState('')
-
+  const { setImageURL } = useContext(TaskContext)
+    
   var data = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [{
@@ -49,11 +51,17 @@ const GenerateGraph_03 = () => {
         fontSize: 26
       }
     },
+
+    elements: {
+      arc: {
+        borderWidth: 0
+      }
+    },
+
     animation : {
       onComplete : function(){    
         const data = document.getElementById('graph')
         setImageURL(data.toDataURL())
-        console.log(imageURL)
       }
     }
   }
@@ -65,7 +73,7 @@ const GenerateGraph_03 = () => {
 
   return (
     <div>
-      <Bar id='graph'
+      <Pie id='graph'
         data={data}
         height={400}
         options={options}

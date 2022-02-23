@@ -4,7 +4,7 @@ import TaskContext from "./TaskContext";
 const TaskState = (props) => {
   
   const [userValue, setUserValue] = useState({})
-
+  const [imageURL, setImageURL] = useState('')
   const setValue = (value) => {
     setUserValue(value)
   }
@@ -12,7 +12,7 @@ const TaskState = (props) => {
 
   return (
     <div>
-        <TaskContext.Provider value={{userValue, setValue}}>
+        <TaskContext.Provider value={{userValue, setValue, imageURL, setImageURL}}>
             {props.children}
         </TaskContext.Provider>
     </div>
